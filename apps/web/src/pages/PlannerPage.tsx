@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
   type PlanInput,
@@ -18,6 +18,7 @@ import {
   recommendedTargetSoc,
 } from '@evcp/calculator';
 import { useT } from '@/i18n';
+import { CATALOG_VEHICLES } from '@/data/catalog';
 import { useSettings, useSettingsValue } from '@/store/settings';
 import { garageLabel, useGarage } from '@/store/garage';
 import { findTariff, useAllTariffs } from '@/store/tariffs';
@@ -52,7 +53,9 @@ export function PlannerPage({ isDark }: { isDark: boolean }) {
   const [customPowerKw, setCustomPowerKw] = useState<number | null>(shared.kw ?? null);
   const [currentSoc, setCurrentSoc] = useState(shared.soc ?? 35);
   const [targetSoc, setTargetSoc] = useState(shared.target ?? settings.targetSoc);
-  const [plugInAt, setPlugInAt] = useState(() => roundToMinute(Date.now()));
+  const [plugInAt, setPlugInAt] = useState(() =>
+    nextLocalTime(Date.now(), settings.timeZone, 20, 0),
+  );
   const [useDeparture, setUseDeparture] = useState(true);
   const [departAt, setDepartAt] = useState(
     () => shared.depart ?? nextLocalTime(Date.now(), settings.timeZone, 8, 0, 60 * 60_000),
@@ -63,15 +66,25 @@ export function PlannerPage({ isDark }: { isDark: boolean }) {
   const [idleDays, setIdleDays] = useState(7);
   const [temperatureC, setTemperatureC] = useState<number | null>(shared.temp ?? null);
   const [tariffId, setTariffId] = useState(
-    shared.tariff ?? settings.defaultTariffId ?? 'cn-generic-tou',
+    shared.tariff ?? settings.defaultTariffId ?? 'cn-luoyang-residential',
   );
   const [showAdvanced, setShowAdvanced] = useState(false);
+
+  const defaultCatalogVehicle = CATALOG_VEHICLES.find(
+    (item) => item.id === settings.defaultVehicleId,
+  );
+
+  useEffect(() => {
+    if (shared.v || garage.length > 0 || !defaultCatalogVehicle) return;
+    addFromCatalog(defaultCatalogVehicle);
+  }, [addFromCatalog, defaultCatalogVehicle, garage.length, shared.v]);
 
   const now = useNow();
 
   // Derived rather than synced through an effect, so removing the selected car from
   // the garage falls back cleanly instead of rendering an empty frame first.
-  const entry = garage.find((item) => item.id === vehicleId) ?? garage[0];
+  const entry =
+    garage.find((item) => item.id === vehicleId || item.vehicle.id === vehicleId) ?? garage[0];
   const vehicle = entry?.vehicle;
 
   // Choices are remembered as they are made rather than written back in an effect,
