@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    // DOM supplies the standard fetch/TextEncoder types. This package must run
+    // unchanged on both Cloudflare Workers and Node, so it uses web APIs only.
+    "lib": ["ES2022", "DOM"],
+    "types": [],
+    "baseUrl": "../.."
+  },
+  "include": ["src/**/*.ts"]
+}

@@ -1,0 +1,246 @@
+@import 'tailwindcss';
+
+/* Theme is driven by a class on <html> so the user's explicit choice beats the OS. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --app-bg: #f4f6f8;
+  --surface: #ffffff;
+  /* Recessed against a white card, so inputs and the selected segment read as
+     distinct layers instead of blending into the card. */
+  --surface-raised: #f1f4f8;
+  --border: #e2e6eb;
+  --border-strong: #cbd3dc;
+  --text: #0d1117;
+  --text-muted: #5b6672;
+  --text-faint: #8a95a3;
+  --accent: #0f766e;
+  --accent-soft: #ccfbf1;
+  --accent-contrast: #ffffff;
+
+  --valley: #16a34a;
+  --flat: #0284c7;
+  --peak: #ea580c;
+  --sharp: #dc2626;
+  --unknown: #94a3b8;
+
+  --ok: #16a34a;
+  --warn: #d97706;
+  --danger: #dc2626;
+
+  --shadow-card: 0 1px 2px rgb(13 17 23 / 0.04), 0 8px 24px -12px rgb(13 17 23 / 0.12);
+}
+
+.dark {
+  --app-bg: #0b0f17;
+  --surface: #131926;
+  --surface-raised: #1a2233;
+  --border: #232c3d;
+  --border-strong: #33405a;
+  --text: #e9edf5;
+  --text-muted: #97a3b6;
+  --text-faint: #6b7688;
+  --accent: #2dd4bf;
+  --accent-soft: #0f2e2c;
+  --accent-contrast: #04211f;
+
+  --valley: #34d399;
+  --flat: #38bdf8;
+  --peak: #fbbf24;
+  --sharp: #f87171;
+  --unknown: #64748b;
+
+  --ok: #34d399;
+  --warn: #fbbf24;
+  --danger: #f87171;
+
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 12px 32px -16px rgb(0 0 0 / 0.7);
+}
+
+@theme inline {
+  --color-app: var(--app-bg);
+  --color-surface: var(--surface);
+  --color-raised: var(--surface-raised);
+  --color-line: var(--border);
+  --color-line-strong: var(--border-strong);
+  --color-ink: var(--text);
+  --color-muted: var(--text-muted);
+  --color-faint: var(--text-faint);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-valley: var(--valley);
+  --color-flat: var(--flat);
+  --color-peak: var(--peak);
+  --color-sharp: var(--sharp);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-danger: var(--danger);
+
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Noto Sans SC', 'Noto Sans JP', Roboto, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
+}
+
+/* Numbers line up in tables and stat rows. Declared as a utility so it can be
+   composed with @apply inside component classes. */
+@utility tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--app-bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overscroll-behavior-y: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  input[type='range'] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  input[type='range']::-webkit-slider-runnable-track {
+    height: 6px;
+    border-radius: 999px;
+    background: var(--border-strong);
+  }
+
+  input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    margin-top: -7px;
+    height: 20px;
+    width: 20px;
+    border-radius: 999px;
+    background: var(--surface-raised);
+    border: 2px solid var(--accent);
+    box-shadow: 0 1px 4px rgb(0 0 0 / 0.25);
+  }
+
+  input[type='range']::-moz-range-track {
+    height: 6px;
+    border-radius: 999px;
+    background: var(--border-strong);
+  }
+
+  input[type='range']::-moz-range-thumb {
+    height: 18px;
+    width: 18px;
+    border-radius: 999px;
+    background: var(--surface-raised);
+    border: 2px solid var(--accent);
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-line bg-surface p-4 sm:p-5;
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-flush {
+    @apply rounded-2xl border border-line bg-surface overflow-hidden;
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-title {
+    @apply text-sm font-semibold tracking-wide text-muted uppercase;
+  }
+
+  .field-label {
+    @apply block text-sm font-medium text-muted mb-1.5;
+  }
+
+  .input {
+    @apply w-full rounded-xl border border-line bg-raised px-3 py-2.5 text-ink
+      transition-colors placeholder:text-faint;
+  }
+
+  .input:hover:not(:disabled) {
+    @apply border-line-strong;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5
+      text-sm font-semibold transition-all select-none;
+  }
+
+  .btn:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  .btn:disabled {
+    @apply opacity-45 cursor-not-allowed;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--accent-contrast);
+  }
+
+  .btn-secondary {
+    @apply border border-line bg-raised text-ink;
+  }
+
+  .btn-ghost {
+    @apply text-muted;
+  }
+
+  .btn-ghost:hover:not(:disabled) {
+    @apply bg-raised text-ink;
+  }
+
+  .btn-danger {
+    @apply border border-transparent;
+    background: color-mix(in srgb, var(--danger) 14%, transparent);
+    color: var(--danger);
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-line
+      px-2.5 py-1 text-xs font-medium text-muted;
+  }
+
+  .stat-value {
+    @apply tnum text-2xl font-semibold tracking-tight text-ink;
+  }
+
+  .stat-label {
+    @apply text-xs font-medium text-faint;
+  }
+
+  .divide-line > * + * {
+    border-top: 1px solid var(--border);
+  }
+}
+
+/* Respect users who ask for less motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

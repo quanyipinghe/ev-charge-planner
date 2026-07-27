@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["vite/client", "vite-plugin-pwa/client"],
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@evcp/models": ["../../packages/models/src/index.ts"],
+      "@evcp/calculator": ["../../packages/calculator/src/index.ts"],
+      "@evcp/notification": ["../../packages/notification/src/index.ts"],
+      "@data/*": ["../../data/dist/*"],
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "vite.config.ts"]
+}

@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2023", "DOM"],
+    "types": ["node", "@cloudflare/workers-types"],
+    "baseUrl": ".",
+    "paths": {
+      "@evcp/models": ["../../packages/models/src/index.ts"],
+      "@evcp/calculator": ["../../packages/calculator/src/index.ts"],
+      "@evcp/notification": ["../../packages/notification/src/index.ts"]
+    }
+  },
+  "include": ["src/**/*.ts", "tsup.config.ts"]
+}

@@ -1,0 +1,32 @@
+services:
+  evcp:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: evchargeplanner:latest
+    container_name: evchargeplanner
+    restart: unless-stopped
+    ports:
+      - '${HTTP_PORT:-8080}:8080'
+    environment:
+      # Required. Encrypts stored notification credentials at rest.
+      #   openssl rand -hex 32
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY:?set ENCRYPTION_KEY in docker/.env}
+      # Restrict this to your own origin when the app is reachable from the internet.
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-*}
+      MAX_PENDING_PER_DEVICE: ${MAX_PENDING_PER_DEVICE:-20}
+      TELEGRAM_WEBHOOK_SECRET: ${TELEGRAM_WEBHOOK_SECRET:-}
+      DEFAULT_TARIFF_ID: ${DEFAULT_TARIFF_ID:-cn-generic-tou}
+      DISPATCH_CRON: ${DISPATCH_CRON:-*/5 * * * *}
+    volumes:
+      # Reminder database. Everything else lives in the browser.
+      - evcp-data:/app/data
+    healthcheck:
+      test: ['CMD', 'wget', '-qO-', 'http://127.0.0.1:8080/api/health']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+volumes:
+  evcp-data:

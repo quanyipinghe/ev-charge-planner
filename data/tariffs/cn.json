@@ -1,0 +1,165 @@
+{
+  "$schema": "../schema/tariffs.schema.json",
+  "tariffs": [
+    {
+      "id": "cn-generic-tou",
+      "name": "通用峰谷电价（谷电 23:00-07:00）",
+      "nameEn": "Generic time-of-use (valley 23:00-07:00)",
+      "region": { "country": "CN" },
+      "currency": "CNY",
+      "seasons": [
+        {
+          "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+          "windows": [
+            { "level": "valley", "from": "23:00", "to": "07:00", "price": 0.3 },
+            { "level": "flat", "from": "07:00", "to": "17:00", "price": 0.55 },
+            { "level": "peak", "from": "17:00", "to": "23:00", "price": 0.85 }
+          ]
+        }
+      ],
+      "source": "需求文档示例，用作默认模板",
+      "verified": false,
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": "cn-flat",
+      "name": "单一电价（无峰谷）",
+      "nameEn": "Flat rate (no time-of-use)",
+      "region": { "country": "CN" },
+      "currency": "CNY",
+      "seasons": [
+        {
+          "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+          "windows": [{ "level": "flat", "from": "00:00", "to": "24:00", "price": 0.5583 }]
+        }
+      ],
+      "source": "未开通峰谷分时的居民合表电价",
+      "verified": false,
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": "cn-jiangsu-residential",
+      "name": "江苏居民峰谷分时",
+      "nameEn": "Jiangsu residential TOU",
+      "region": { "country": "CN", "province": "江苏" },
+      "currency": "CNY",
+      "seasons": [
+        {
+          "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+          "windows": [
+            { "level": "valley", "from": "21:00", "to": "08:00", "price": 0.3583 },
+            { "level": "peak", "from": "08:00", "to": "21:00", "price": 0.5583 }
+          ]
+        }
+      ],
+      "tiers": [
+        { "upToKwh": 230, "delta": 0 },
+        { "upToKwh": 400, "delta": 0.05 },
+        { "upToKwh": null, "delta": 0.3 }
+      ],
+      "source": "公开资料（待核验，以当地电费单为准）",
+      "verified": false,
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": "cn-zhejiang-residential",
+      "name": "浙江居民峰谷分时",
+      "nameEn": "Zhejiang residential TOU",
+      "region": { "country": "CN", "province": "浙江" },
+      "currency": "CNY",
+      "seasons": [
+        {
+          "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+          "windows": [
+            { "level": "valley", "from": "22:00", "to": "08:00", "price": 0.288 },
+            { "level": "peak", "from": "08:00", "to": "22:00", "price": 0.568 }
+          ]
+        }
+      ],
+      "tiers": [
+        { "upToKwh": 230, "delta": 0 },
+        { "upToKwh": 400, "delta": 0.05 },
+        { "upToKwh": null, "delta": 0.3 }
+      ],
+      "source": "公开资料（待核验，以当地电费单为准）",
+      "verified": false,
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": "cn-shanghai-residential",
+      "name": "上海居民峰谷分时",
+      "nameEn": "Shanghai residential TOU",
+      "region": { "country": "CN", "province": "上海" },
+      "currency": "CNY",
+      "seasons": [
+        {
+          "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+          "windows": [
+            { "level": "valley", "from": "22:00", "to": "06:00", "price": 0.307 },
+            { "level": "peak", "from": "06:00", "to": "22:00", "price": 0.617 }
+          ]
+        }
+      ],
+      "tiers": [
+        { "upToKwh": 260, "delta": 0 },
+        { "upToKwh": 400, "delta": 0.05 },
+        { "upToKwh": null, "delta": 0.3 }
+      ],
+      "source": "公开资料（待核验，以当地电费单为准）",
+      "verified": false,
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": "cn-beijing-residential",
+      "name": "北京居民峰谷分时",
+      "nameEn": "Beijing residential TOU",
+      "region": { "country": "CN", "province": "北京" },
+      "currency": "CNY",
+      "seasons": [
+        {
+          "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+          "windows": [
+            { "level": "valley", "from": "23:00", "to": "07:00", "price": 0.2937 },
+            { "level": "peak", "from": "07:00", "to": "23:00", "price": 0.4883 }
+          ]
+        }
+      ],
+      "tiers": [
+        { "upToKwh": 240, "delta": 0 },
+        { "upToKwh": 400, "delta": 0.05 },
+        { "upToKwh": null, "delta": 0.3 }
+      ],
+      "source": "公开资料（待核验，以当地电费单为准）",
+      "verified": false,
+      "updatedAt": "2026-07-27"
+    },
+    {
+      "id": "cn-guangdong-residential",
+      "name": "广东居民峰平谷分时",
+      "nameEn": "Guangdong residential TOU",
+      "region": { "country": "CN", "province": "广东" },
+      "currency": "CNY",
+      "seasons": [
+        {
+          "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+          "windows": [
+            { "level": "valley", "from": "00:00", "to": "08:00", "price": 0.2497 },
+            { "level": "flat", "from": "08:00", "to": "14:00", "price": 0.4497 },
+            { "level": "peak", "from": "14:00", "to": "17:00", "price": 0.7229 },
+            { "level": "flat", "from": "17:00", "to": "19:00", "price": 0.4497 },
+            { "level": "peak", "from": "19:00", "to": "22:00", "price": 0.7229 },
+            { "level": "flat", "from": "22:00", "to": "24:00", "price": 0.4497 }
+          ]
+        }
+      ],
+      "tiers": [
+        { "upToKwh": 260, "delta": 0 },
+        { "upToKwh": 600, "delta": 0.05 },
+        { "upToKwh": null, "delta": 0.3 }
+      ],
+      "source": "公开资料（待核验，以当地电费单为准）",
+      "verified": false,
+      "updatedAt": "2026-07-27"
+    }
+  ]
+}

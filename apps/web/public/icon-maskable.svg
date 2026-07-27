@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="EVChargePlanner">
+  <defs>
+    <linearGradient id="bgm" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#134e4a" />
+    </linearGradient>
+    <linearGradient id="boltm" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5eead4" />
+      <stop offset="100%" stop-color="#22c55e" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#bgm)" />
+  <!-- Artwork kept inside the 80% safe zone required for maskable icons. -->
+  <g transform="translate(256 256) scale(0.62) translate(-256 -256)">
+    <rect x="112" y="150" width="248" height="212" rx="40" fill="none" stroke="#5eead4" stroke-width="24" opacity="0.9" />
+    <rect x="372" y="212" width="34" height="88" rx="14" fill="#5eead4" opacity="0.9" />
+    <path d="M262 176 L176 274 h58 l-16 84 88 -104 h-60 z" fill="url(#boltm)" />
+  </g>
+</svg>

@@ -1,0 +1,29 @@
+name = "evcp-api"
+main = "src/worker.ts"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Sweep for due reminders every five minutes. Cron triggers are the Workers
+# equivalent of the node-cron schedule the server deployment runs.
+[triggers]
+crons = ["*/5 * * * *"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "evcp"
+# Replace with the id printed by: wrangler d1 create evcp
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+
+[vars]
+ALLOWED_ORIGINS = "*"
+MAX_PENDING_PER_DEVICE = "20"
+DEFAULT_TARIFF_ID = "cn-generic-tou"
+
+# Secrets are set out of band, never committed:
+#   wrangler secret put ENCRYPTION_KEY
+#   wrangler secret put TELEGRAM_WEBHOOK_SECRET
+
+[alias]
+"@evcp/models" = "../../packages/models/src/index.ts"
+"@evcp/calculator" = "../../packages/calculator/src/index.ts"
+"@evcp/notification" = "../../packages/notification/src/index.ts"
